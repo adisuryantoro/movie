@@ -20,13 +20,13 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout__list_movie_item_1_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageView_list_movie_item_1_1_1"
                 android:layout_width="140dp"
                 android:layout_height="200dp"
-                android:layout_margin="10dp"
+                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/textView_list_movie_item_1_1_2"
                 app:layout_constraintStart_toStartOf="parent"

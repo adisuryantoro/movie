@@ -24,9 +24,8 @@ public class AdapterListMovie extends RecyclerView.Adapter<AdapterListMovie.List
     private Context mContext;
     private List<Result> dataListMovieList;
 
-    public AdapterListMovie(Context mContext, List<Result> dataListMovieList){
+    public AdapterListMovie(Context mContext){
         this.mContext = mContext;
-        this.dataListMovieList = dataListMovieList;
     }
 
     @NonNull
@@ -65,6 +64,11 @@ public class AdapterListMovie extends RecyclerView.Adapter<AdapterListMovie.List
 
     }
 
+    public void clearData() {
+        dataListMovieList.clear();
+        notifyDataSetChanged();
+    }
+
 
     public class ListMovieViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewPoster;
@@ -88,5 +92,10 @@ public class AdapterListMovie extends RecyclerView.Adapter<AdapterListMovie.List
         }
 
         else return 0;
+    }
+
+    public void setDataListMovieList(List<Result> dataListMovieList){
+        this.dataListMovieList = dataListMovieList;
+        notifyDataSetChanged();
     }
 }

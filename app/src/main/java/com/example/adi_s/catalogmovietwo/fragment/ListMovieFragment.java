@@ -3,6 +3,7 @@ package com.example.adi_s.catalogmovietwo.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.adi_s.catalogmovietwo.R;
@@ -33,6 +35,9 @@ public class ListMovieFragment extends Fragment {
     RecyclerView recyclerViewListMovieFragment;
     List<Result> mDataListMovie;
     SwipeRefreshLayout swipeRefreshLayoutListMovieFragment;
+    LinearLayoutManager linearLayoutManager;
+    AdapterListMovie adapterListMovie;
+
 
     public ListMovieFragment() {
         // Required empty public constructor
@@ -47,37 +52,44 @@ public class ListMovieFragment extends Fragment {
 
         View itemView = inflater.inflate(R.layout.fragment_list_movie, container, false);
 
-        recyclerViewListMovieFragment = itemView.findViewById(R.id.recyclerMovie_fragment_list_movie_1_2_1);
+        recyclerViewListMovieFragment = itemView.findViewById(R.id.recyclerMovie_fragment_list_movie_1_1_2);
         swipeRefreshLayoutListMovieFragment = itemView.findViewById(R.id.swipeRfreshLayout_fragment_list_movie_1);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-
+        adapterListMovie = new AdapterListMovie(getActivity());
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerViewListMovieFragment.setLayoutManager(linearLayoutManager);
+        recyclerViewListMovieFragment.setAdapter(adapterListMovie);
 
+        doApiCall();
 
+        swipeRefreshLayoutListMovieFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapterListMovie.clearData();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        doApiCall();
+
+                    }
+                }, 1000);
+            }
+        });
+        return itemView;
+
+    }
+
+    private void doApiCall() {
         ApiMovieInterface apiMovieInterface = ApiMovieClient.createServiceClient(ApiMovieInterface.class);
 
         Call<DataListMovie> getNoticeListMovie = apiMovieInterface.getDataListMovie("now_playing", getString(R.string.api_key));
         getNoticeListMovie.enqueue(new Callback<DataListMovie>() {
+
             @Override
             public void onResponse(Call<DataListMovie> call, Response<DataListMovie> response) {
+                swipeRefreshLayoutListMovieFragment.setRefreshing(false);
                 mDataListMovie = response.body().getResults();
-
-                swipeRefreshLayoutListMovieFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                swipeRefreshLayoutListMovieFragment.setRefreshing(false);
-
-                                AdapterListMovie adapterListMovie = new AdapterListMovie(getActivity(), mDataListMovie);
-                                recyclerViewListMovieFragment.setAdapter(adapterListMovie);
-
-                            }
-                        }, 3000);
-                    }
-                });
+                adapterListMovie.setDataListMovieList(mDataListMovie);
             }
 
             @Override
@@ -85,10 +97,7 @@ public class ListMovieFragment extends Fragment {
                 Toast.makeText(getActivity(),
                         "" + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
-
             }
         });
-        return itemView;
-
     }
 }
