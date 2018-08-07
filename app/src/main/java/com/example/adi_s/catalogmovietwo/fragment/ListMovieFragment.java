@@ -2,7 +2,9 @@ package com.example.adi_s.catalogmovietwo.fragment;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ import retrofit2.Response;
 public class ListMovieFragment extends Fragment {
     RecyclerView recyclerViewListMovieFragment;
     List<Result> mDataListMovie;
+    SwipeRefreshLayout swipeRefreshLayoutListMovieFragment;
 
     public ListMovieFragment() {
         // Required empty public constructor
@@ -45,10 +48,12 @@ public class ListMovieFragment extends Fragment {
         View itemView = inflater.inflate(R.layout.fragment_list_movie, container, false);
 
         recyclerViewListMovieFragment = itemView.findViewById(R.id.recyclerMovie_fragment_list_movie_1_2_1);
+        swipeRefreshLayoutListMovieFragment = itemView.findViewById(R.id.swipeRfreshLayout_fragment_list_movie_1);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
         recyclerViewListMovieFragment.setLayoutManager(linearLayoutManager);
+
 
         ApiMovieInterface apiMovieInterface = ApiMovieClient.createServiceClient(ApiMovieInterface.class);
 
@@ -57,15 +62,29 @@ public class ListMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<DataListMovie> call, Response<DataListMovie> response) {
                 mDataListMovie = response.body().getResults();
-                AdapterListMovie adapterListMovie = new AdapterListMovie(getActivity(), mDataListMovie);
-                recyclerViewListMovieFragment.setAdapter(adapterListMovie);
+
+                swipeRefreshLayoutListMovieFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                swipeRefreshLayoutListMovieFragment.setRefreshing(false);
+
+                                AdapterListMovie adapterListMovie = new AdapterListMovie(getActivity(), mDataListMovie);
+                                recyclerViewListMovieFragment.setAdapter(adapterListMovie);
+
+                            }
+                        }, 3000);
+                    }
+                });
             }
 
             @Override
             public void onFailure(Call<DataListMovie> call, Throwable t) {
-                    Toast.makeText(getActivity(),
-                            ""+t.getMessage(),
-                            Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                        "" + t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
 
             }
         });
