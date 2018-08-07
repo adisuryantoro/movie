@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ListMovieFragment">
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRfreshLayout_fragment_list_movie_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout_fragment_list_movie_1_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editText_fragment_list_movie_1_1_1"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/search_movie"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@id/button_fragment_list_movie_1_1_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_fragment_list_movie_1_1_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="@string/search"
+                android:textColor="@color/colorIconsWhite"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/editText_fragment_list_movie_1_1_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/editText_fragment_list_movie_1_1_1"
+                app:layout_constraintTop_toTopOf="@id/editText_fragment_list_movie_1_1_1" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout_fragment_list_movie_1_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/editText_fragment_list_movie_1_1_1">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerMovie_fragment_list_movie_1_2_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</FrameLayout>

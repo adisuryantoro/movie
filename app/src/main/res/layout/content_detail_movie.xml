@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.DetailMovieActivity"
+    tools:showIn="@layout/activity_detail_movie">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout_content_detail_movie_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+
+        <TextView
+            android:id="@+id/textView_content_detail_movie_1_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/title_movie"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_content_detail_movie_1_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/popularity"
+            app:layout_constraintTop_toBottomOf="@id/textView_content_detail_movie_1_1" />
+
+
+        <TextView
+            android:id="@+id/textView_content_detail_movie_1_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/language"
+            app:layout_constraintTop_toBottomOf="@id/textView_content_detail_movie_1_2" />
+
+        <TextView
+            android:id="@+id/textView_content_detail_movie_1_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/description"
+            app:layout_constraintTop_toBottomOf="@id/textView_content_detail_movie_1_3" />
+
+        <TextView
+            android:id="@+id/textView_content_detail_movie_1_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/release_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_content_detail_movie_1_4" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v4.widget.NestedScrollView>
